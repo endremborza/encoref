@@ -1,1 +1,1 @@
-add build req
+add numpy to build reqs
