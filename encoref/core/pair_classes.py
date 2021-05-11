@@ -50,7 +50,10 @@ class PairBase:
     @classmethod
     def concat(cls, pairs, ignore_index=False):
 
-        df1, df2 = [pd.concat([p[i] for p in pairs], ignore_index=ignore_index) for i in range(2)]
+        df1, df2 = [
+            pd.concat([p[i] for p in pairs], ignore_index=ignore_index)
+            for i in range(2)
+        ]
 
         return cls(**{**asdict(pairs[0]), "df1": df1, "df2": df2})
 

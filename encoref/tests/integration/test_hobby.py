@@ -88,11 +88,15 @@ def test_gb_transforms():
 
     tr1 = MotifRoot("person", [0, 1, 2], [0, 1, 2, 3])
     tr2 = MotifExtension("ph", 0)
-    mpair = tr2.transform(tr1.transform(None, crl), crl)
+    mpair = MotifFilter(0, [0, 1, 2], [0, 1, 2, 3]).transform(
+        tr2.transform(tr1.transform(None, crl), crl), crl
+    )
 
     tr3 = MotifGroupbySide(0, [MotifSampler(1, None), MotifMatch()], 0)
 
     mpair = tr3.transform(mpair, crl)
+
+    mpair = MotifKeepTop(1).transform(mpair, crl)
 
     print("\n-------")
     print(mpair.df1)
@@ -122,7 +126,4 @@ def test_crl():
 
 
 def test_blocking_motif():
-
-    crl = get_hobby_crl()
-
     pass

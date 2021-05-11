@@ -137,8 +137,13 @@ class MotifSampler:
     right_size: Union[int, float, None]
 
     def transform(self, motifpair: MotifPair, crl: "CoReferenceLock"):
-        return motifpair.sample(*[self._parse_sampler(n, s, motifpair) for s, n in enumerate([self.left_size, self.right_size])])
-    
+        return motifpair.sample(
+            *[
+                self._parse_sampler(n, s, motifpair)
+                for s, n in enumerate([self.left_size, self.right_size])
+            ]
+        )
+
     def _parse_sampler(self, n, s, motifpair):
         fullsize = motifpair[s].shape[0]
         if n is None:
@@ -198,13 +203,15 @@ class IntegrateToResult:
                 einds = [motif.iloc[i, c] for motif in motifpair]
                 for corefdic in [crl.results, new_corefs]:
                     old_match = corefdic is crl.results
-                    matches = [corefdic[etype][s].get(e) for s, e in enumerate(einds)]
+                    matches = [
+                        corefdic[etype][s].get(e) for s, e in enumerate(einds)
+                    ]
                     current_blockers = [None, None]
                     for mi, match in enumerate(matches):
-                        if match is None or match == einds[1-mi]:
+                        if match is None or match == einds[1 - mi]:
                             continue
                         current_blockers[mi] = match
-                    if all(b is None for b in current_blockers): 
+                    if all(b is None for b in current_blockers):
                         if not old_match:
                             for s in range(2):
                                 corefdic[etype][s][einds[s]] = einds[1 - s]
@@ -238,7 +245,6 @@ class IntegrateToResult:
         # does not really work if the first one is corrupted
         return len(blockers) < (mpair.min_size - cutoff)
 
-
     def _coliterator(self, motifpair):
         if self.cols is None:
             return [*enumerate(motifpair.entity_types_of_columns)]
@@ -267,7 +273,7 @@ class MotifGroupbyCorefs:
         if gpairs:
             return MotifPair.concat(gpairs, ignore_index=True)
         return motifpair.sample([], [])
-    
+
     def _get_iterator(self, motifpair, crl):
         es_type = motifpair.entity_types_of_columns[self.col]
 
@@ -284,9 +290,9 @@ class MotifGroupbyCorefs:
 
     def _get_inds(self, es, motifpair):
         return [
-                _df.loc[_df.loc[:, self.col] == e].index.tolist()
-                for e, _df in zip(es, motifpair)
-            ]
+            _df.loc[_df.loc[:, self.col] == e].index.tolist()
+            for e, _df in zip(es, motifpair)
+        ]
 
 
 @dataclass
@@ -295,7 +301,7 @@ class MotifGroupbySide(MotifGroupbyCorefs):
 
     def _get_iterator(self, motifpair, crl):
         return motifpair[self.side].groupby(self.col)
-    
+
     def _get_inds(self, es, motifpair):
         oside = 1 - self.side
         order = 1 if oside else -1

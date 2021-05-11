@@ -23,7 +23,7 @@ class CoReferenceLock:
         relation_pairs: List[RelationPair],
         progress_bar: bool = False,
         starting_matches: Optional[Dict[str, Tuple[dict, dict]]] = None,
-        verbose: bool = False
+        verbose: bool = False,
     ):
 
         self.use_pbars = progress_bar
