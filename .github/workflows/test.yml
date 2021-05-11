@@ -26,6 +26,7 @@ jobs:
         pip install -r requirements.txt
     - name: Test
       run: |
+        python setup.py build_ext --inplace
         inv misc.lint
         inv test.test
     - name: "Upload coverage to Codecov"
