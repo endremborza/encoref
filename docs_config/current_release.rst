@@ -1,1 +1,1 @@
-- first release of encoref, yay!!
+fix reqs
