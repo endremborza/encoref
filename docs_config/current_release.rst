@@ -1,1 +1,1 @@
-add numpy to build reqs
+maybe this works
