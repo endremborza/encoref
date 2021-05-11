@@ -6,3 +6,9 @@
 [![pypi](https://img.shields.io/pypi/v/encoref.svg)](https://pypi.org/project/encoref/)
 
 add keywords to pyproject.toml
+
+to motif matching:
+- "has coref elsewhere" into motif distance
+- weighting of entity distances to be refined
+- what if an entity type has no dataprops?
+- utilize some information regarding overall graph structure

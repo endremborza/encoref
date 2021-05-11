@@ -2,6 +2,8 @@ import os
 import toml
 import importlib
 from setuptools import find_packages, setup
+from Cython.Build import cythonize
+import numpy as np
 
 pytom = toml.load("pyproject.toml")
 package_name = pytom["project"]["name"]
@@ -21,6 +23,8 @@ if __name__ == "__main__":
     setup(
         name=package_name,
         version=__version__,
+        ext_modules=cythonize("encoref/core/c_utils.pyx"),
+        include_dirs=[np.get_include()],
         description=pytom["project"]["description"],
         long_description=long_description,
         long_description_content_type="text/markdown",
