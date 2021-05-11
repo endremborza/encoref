@@ -1,0 +1,4 @@
+v0.0.4
+------
+
+add numpy to build reqs
